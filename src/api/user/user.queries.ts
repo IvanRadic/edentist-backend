@@ -98,5 +98,30 @@ export const UserQueries = {
   FROM user
   WHERE id = @user_id
     AND status != '${UserStatus.DELETED}';
-  `
+  `,
+
+  updateUser: `
+  SET @user_id = ?;
+
+  UPDATE user
+  SET first_name = ?,
+    last_name = ?,
+    email = ?,
+    password = ?,
+    profile_image = ?
+  WHERE id = @user_id;
+
+  SELECT id, 
+    first_name as 'firstName', 
+    last_name as 'lastName', 
+    email, 
+    password, 
+    profile_image as 'profileImage', 
+    status, 
+    created_at as 'createdAt', 
+    updated_at as 'updatedAt'
+  FROM user 
+  WHERE id = @user_id
+    AND status != '${UserStatus.DELETED}';
+  `,
 }

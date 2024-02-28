@@ -40,6 +40,7 @@ export enum ResponseCode {
   SESSION_NOT_FOUND = 40404,
   CONFLICT = 40900,
   SESSION_NOT_UPDATED = 40901,
+  USER_NOT_UPDATED = 40902,
   WRONG_INPUT_TYPE = 41500,
   WRONG_INPUT_PHOTO_TYPE = 41501,
   FAILED_DEPENDENCY = 42400,
@@ -79,4 +80,5 @@ export enum ResponseMessage {
   ALREADY_VERIFIED = 'User account is already verified',
   SESSION_NOT_FOUND = 'User session not found',
   SESSION_NOT_UPDATED = 'User session not updated',
+  USER_NOT_UPDATED = 'User not updated',
 }

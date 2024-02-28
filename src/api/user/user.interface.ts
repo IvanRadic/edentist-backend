@@ -8,7 +8,7 @@ export type FullUser = {
   email: string
   password: string
   status: UserStatus
-  profilePicture: string
+  profileImage: string
   createdAt: string
   updatedAt: string
 }
@@ -65,6 +65,15 @@ export interface ISetUserStatus {
   status: UserStatus
 }
 
+export interface IUpdateUser {
+  id: number
+  firstName?: string | null
+  lastName?: string | null
+  email?: string | null
+  password?: string | null
+  profileImage?: string | null
+}
+
 export interface IUserService {
   getUserByEmail(params: IGetUserByEmail): AsyncResponse<FullUser>
   getUserById(params: IGetUserById): AsyncResponse<FullUser>
@@ -73,4 +82,5 @@ export interface IUserService {
   getProfile(params: IGetProfile): AsyncResponse<Profile>
   editProfile(params: IEditProfile): AsyncResponse<Profile>
   updateProfileImage(params: IUpdateProfileImage): AsyncResponse<Profile>
+  updateUser(params: IUpdateUser): AsyncResponse<FullUser>
 }

@@ -3,6 +3,7 @@ import { AsyncResponse, ResponseCode, ResponseMessage } from '../../interfaces'
 import { logger } from '../../logger'
 import { query } from '../../services/mysql2'
 import { getResponseMessage } from '../../services/utils'
+import { UserQueries } from './user.queries'
 import {
   FullUser,
   ICreateUser,
@@ -15,6 +16,7 @@ import {
   IEditProfile,
   ISetUserStatus,
   UserRole,
+  IUpdateUser,
 } from './user.interface'
 import { UserQueries } from './user.queries'
 
@@ -205,6 +207,47 @@ export class UserService implements IUserService {
       )
 
       return { profile: updatedProfile, code }
+    } catch (err: any) {
+      code = ResponseCode.SERVER_ERROR
+      logger.error({
+        code,
+        message: getResponseMessage(code),
+        stack: err.stack
+      })
+    }
+
+    return { code }
+  }
+
+  async updateUser( updatedUser: IUpdateUser) {
+    let code: ResponseCode = ResponseCode.OK
+
+    try {
+      const { user: originalUser, code: userCode } = await this.getUserById({
+        userId: updatedUser.id
+      })
+      if (!originalUser) {
+        return { code: userCode }
+      }
+
+      let user = _.omit(originalUser, ['status', 'createdAt', 'updatedAt'])
+
+      for (const key in updatedUser) {
+        if (updatedUser[key as keyof IUpdateUser] !== user[key as keyof IUpdateUser]) {
+          (user as any)[key] = updatedUser[key as keyof IUpdateUser];
+        }
+      }
+
+      const [updatedProfile] = await query<[FullUser]>(
+        UserQueries.updateUser,
+        [user.id, user.firstName, user.lastName, user.email, user.password, user.profileImage],
+        true
+      )
+      if (!updatedProfile) {
+        return { code: ResponseCode.USER_NOT_UPDATED }
+      }
+
+      return { user: updatedProfile, code }
     } catch (err: any) {
       code = ResponseCode.SERVER_ERROR
       logger.error({
