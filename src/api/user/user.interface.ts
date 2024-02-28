@@ -74,6 +74,10 @@ export interface IUpdateUser {
   profileImage?: string | null
 }
 
+export interface IDeleteUser {
+  userId: number
+}
+
 export interface IUserService {
   getUserByEmail(params: IGetUserByEmail): AsyncResponse<FullUser>
   getUserById(params: IGetUserById): AsyncResponse<FullUser>
@@ -83,4 +87,5 @@ export interface IUserService {
   editProfile(params: IEditProfile): AsyncResponse<Profile>
   updateProfileImage(params: IUpdateProfileImage): AsyncResponse<Profile>
   updateUser(params: IUpdateUser): AsyncResponse<FullUser>
+  deleteUser(params: IDeleteUser): AsyncResponse<null>
 }

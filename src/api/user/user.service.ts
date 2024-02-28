@@ -1,9 +1,11 @@
 import config from '../../config'
+import _ from 'lodash'
 import { AsyncResponse, ResponseCode, ResponseMessage } from '../../interfaces'
 import { logger } from '../../logger'
 import { query } from '../../services/mysql2'
 import { getResponseMessage } from '../../services/utils'
 import { UserQueries } from './user.queries'
+import { generateUUID } from '../../services/uuid'
 import {
   FullUser,
   ICreateUser,
@@ -16,9 +18,10 @@ import {
   IEditProfile,
   ISetUserStatus,
   UserRole,
+  IDeleteUser,
   IUpdateUser,
+  UserStatus,
 } from './user.interface'
-import { UserQueries } from './user.queries'
 
 export class UserService implements IUserService {
   constructor() {}
@@ -260,4 +263,42 @@ export class UserService implements IUserService {
     return { code }
   }
 
+  async deleteUser({ userId }: IDeleteUser) {
+    let code = ResponseCode.OK
+
+    try {
+      /*
+      This is where you would delete the user's profile image from storage
+      */
+
+      const url = `${config.STORAGE_BASE_URL}${config.DELETED_PROFILE_IMAGE_LOCATION}`
+
+      const email = `deleted-${generateUUID()}`
+
+      await this.updateUser({
+        id: userId,
+        firstName: null,
+        lastName: null,
+        email,
+        password: null,
+        profileImage: url
+      })
+
+      await this.setUserStatus({
+        userId,
+        status: UserStatus.DELETED
+      })
+
+      return { code }
+    } catch (err: any) {
+      code = ResponseCode.SERVER_ERROR
+      logger.error({
+        code,
+        message: getResponseMessage(code),
+        stack: err.stack
+      })
+    }
+
+    return { code }
+  }
 }
