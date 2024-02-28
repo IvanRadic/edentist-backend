@@ -62,3 +62,8 @@ authRouter.post(
   validate(changePasswordSchema),
   authController.changePassword
 )
+authRouter.delete(
+  '/',
+  requireToken,
+  authController.deleteUser
+)

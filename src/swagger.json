@@ -300,6 +300,22 @@
         }
       }
     },
+    "auth/delete": {
+      "delete": {
+        "tags": ["Auth"],
+        "description": "Delete your account",
+        "responses": {
+          "200": {
+            "description": "Account deleted",
+            "content": {
+              "schema": {
+                "$ref": "#/definitions/20000_response"
+              }
+            }
+          }
+        }
+      }
+    },
     "/messages/{slug}": {
       "get": {
         "summary": "Gets dynamic message by slug",
