@@ -3,12 +3,15 @@ import { AuthService } from './auth.service'
 import { ResponseCode } from '../../interfaces'
 import { getAccessCookieOptions } from '../../config'
 import _ from 'lodash'
+import { UserService } from '../user/user.service'
 
 export class AuthController {
   private readonly authService: AuthService
+  private readonly userService: UserService
 
   constructor() {
     this.authService = new AuthService()
+    this.userService = new UserService()
   }
 
   register = async (req: Request, res: Response, next: NextFunction) => {
@@ -135,6 +138,14 @@ export class AuthController {
       password,
       uid
     })
+
+    return next({ code })
+  }
+
+  deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    const { user } = req
+
+    const { code } = await this.userService.deleteUser({ userId: user.id })
 
     return next({ code })
   }
