@@ -1,6 +1,6 @@
 import express from 'express'
-import { MessageController } from './messageController'
-import { getMessageBySlug } from './messageInput'
+import { MessageController } from './message.controller'
+import { getMessageBySlug } from './message.input'
 import { validate } from '../../middleware/validation'
 
 const messageController = new MessageController()

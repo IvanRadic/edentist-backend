@@ -4,8 +4,8 @@ import {
   DynamicMessage,
   IGetDynamicMessage,
   IMessageService
-} from './interface'
-import { MessageQueries } from './messageQueries'
+} from './message.interface'
+import { MessageQueries } from './message.queries'
 import { getResponseMessage } from '../../services/utils'
 import { logger } from '../../logger'
 

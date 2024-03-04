@@ -1,4 +1,4 @@
-import { VerificationUIDType } from "../verification_uid/interface"
+import { VerificationUIDType } from '../verification-uid/verification-uid.interface'
 
 export const AuthQueries = {
   createUserSession: `
@@ -85,7 +85,7 @@ export const AuthQueries = {
   FROM user_reset_password
   WHERE user_id = ?
   `,
-  
+
   getResetPasswordUID: `
   SELECT
     user_id as 'userId',
@@ -167,5 +167,5 @@ export const AuthQueries = {
   deleteUser: `
     DELETE FROM user
     WHERE id = ?
-  `
-};
+  `,
+}

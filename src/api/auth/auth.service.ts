@@ -21,9 +21,9 @@ import { KeyType, generateToken, verifyToken } from '../../services/jsonwebtoken
 import { AuthQueries } from './auth.queries'
 import { query } from '../../services/mysql2'
 import config from '../../config'
-import { VerificationUIDService } from '../verification_uid/verificationUIDService'
+import { VerificationUIDService } from '../verification-uid/verification-uid.service'
 import { ResultSetHeader } from 'mysql2'
-import { VerificationUIDType } from '../verification_uid/interface'
+import { VerificationUIDType } from '../verification-uid/verification-uid.interface'
 import { generateUUID } from '../../services/uuid'
 import { UserStatus } from '../user/user.interface'
 

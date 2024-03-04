@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import _ from 'lodash'
 import { ResponseCode } from '../../interfaces'
-import { MessageService } from './messageService'
+import { MessageService } from './message.service'
 
 export class MessageController {
   private readonly messageService: MessageService

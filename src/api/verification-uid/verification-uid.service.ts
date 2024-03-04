@@ -8,9 +8,9 @@ import {
   IClearVerificationUID,
   ISetVerificationUID,
   IVerificationUIDService,
-  IVerifyUID
-} from './interface'
-import { VerificationUIDQueries } from './verificationUIDQueries'
+  IVerifyUID,
+} from './verification-uid.interface'
+import { VerificationUIDQueries } from './verification-uid.queries'
 
 export class VerificationUIDService implements IVerificationUIDService {
   constructor() {}
@@ -23,11 +23,7 @@ export class VerificationUIDService implements IVerificationUIDService {
       const hash = await hashString(uid)
 
       await this.clearVerificationUID({ userId, type })
-      await query(VerificationUIDQueries.createVerificationUID, [
-        userId,
-        hash,
-        type
-      ])
+      await query(VerificationUIDQueries.createVerificationUID, [userId, hash, type])
 
       return { uid, code }
     } catch (err: any) {
@@ -44,7 +40,7 @@ export class VerificationUIDService implements IVerificationUIDService {
       logger.error({
         code,
         message: getResponseMessage(code),
-        stack: err.stack
+        stack: err.stack,
       })
     }
 
@@ -63,7 +59,7 @@ export class VerificationUIDService implements IVerificationUIDService {
       logger.error({
         code,
         message: getResponseMessage(code),
-        stack: err.stack
+        stack: err.stack,
       })
     }
 
@@ -100,7 +96,7 @@ export class VerificationUIDService implements IVerificationUIDService {
       logger.error({
         code,
         message: getResponseMessage(code),
-        stack: err.stack
+        stack: err.stack,
       })
     }
 
